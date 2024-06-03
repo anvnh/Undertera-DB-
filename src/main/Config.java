@@ -33,11 +33,16 @@ public class Config {
             String s = br.readLine();
 
             // Music volume
-            gamepanel.sound.volume = Integer.parseInt(s);
+            if(s != null) {
+                gamepanel.sound.volume = Integer.parseInt(s);
+            } else gamepanel.sound.volume = 10;
 
             // SE Volume
             s = br.readLine();
-            gamepanel.sound.soundEffect = Integer.parseInt(s);
+            if(s != null){
+                gamepanel.sound.soundEffect = Integer.parseInt(s);
+            } else gamepanel.sound.volume = 10;
+
 
             br.close();
 

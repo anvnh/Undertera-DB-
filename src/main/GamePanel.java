@@ -2,6 +2,8 @@ package main;
 
 import ai.PathFinder;
 import data.SaveLoad;
+import db.bus.LoginBUS;
+import db.dao.LoginDAO;
 import entity.Entity;
 import entity.Player;
 import tile.Map;
@@ -12,9 +14,7 @@ import environment.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.net.Inet4Address;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -59,7 +59,7 @@ public class GamePanel extends JPanel implements Runnable {
     public EventHandler eventHandler = new EventHandler(this);
     public CollisionCheck collisionCheck = new CollisionCheck(this);
     public AssetSetter assetSetter = new AssetSetter(this);
-    Config config = new Config(this);
+    public Config config = new Config(this);
     public PathFinder pathFinder = new PathFinder(this);
     public EnvironmentManager environmentManager = new EnvironmentManager(this);
     SaveLoad saveLoad = new SaveLoad(this);
@@ -77,6 +77,11 @@ public class GamePanel extends JPanel implements Runnable {
     //public ArrayList<Entity> projectileList = new ArrayList<>();
     public Entity projectile[][] = new Entity[maxMap][100];
     public ArrayList<Entity> particleList = new ArrayList<>();
+
+    //==========================================================================================//
+    public String userID = "";
+    //==========================================================================================//
+
 
     //==================================== Game states ==================================-======//
     public int gameState;
@@ -130,6 +135,7 @@ public class GamePanel extends JPanel implements Runnable {
         //tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
         //g2 = (Graphics2D) tempScreen.getGraphics();
     }
+
     public void resetGame(boolean restart)
     {
         currentArea = outSide;

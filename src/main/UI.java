@@ -1,15 +1,17 @@
 package main;
 
+import db.bus.DataBUS;
+import db.dao.LoginDAO;
 import entity.Entity;
 import object.HeartObject;
 import object.ManaObject;
 import object.SilverCoinObject;
+import ui.LoginGUI;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.zip.InflaterInputStream;
@@ -35,6 +37,11 @@ public class UI {
     int charIndex = 0;
     String combinedText = "";
     int Prev_State;
+
+    //=========================== DB ==============================//
+    DataBUS dataBUS = new DataBUS();
+    LoginDAO loginDAO;
+    //============================================================//
 
     public UI(GamePanel gp)
     {
@@ -869,6 +876,14 @@ public class UI {
                 if(gamepanel.saveLoad.success)
                 {
                     messages.add("Game saved.");
+                    try {
+                        InputStream configStream = new FileInputStream("config");
+                        InputStream dataStream = new FileInputStream("save.dat");
+                        dataBUS.UpdateUserDataAndConfig(gamepanel.userID, configStream, dataStream);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                    System.out.println(gamepanel.userID);
                     gamepanel.gameState = gamepanel.playState;
                     messageCounter.add(0);
                 }
